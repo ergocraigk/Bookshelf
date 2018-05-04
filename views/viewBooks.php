@@ -10,49 +10,18 @@
 
     //track the users session data
     session_start();
-    //pull in the database connection data
-    require_once('../../DBbooks.php');
 
-    //error_reporting(E_ALL);
-    //attempt a database connection, display error message if fail
-    try{
-        $dbh = new PDO("mysql:host=$hostname;
-                            dbname=ckochgre_Books", $username, $password);
-    }catch (PDOException $e){
-        echo $e->getMessage();
-    }
+    error_reporting(E_ALL);
 
+    require_once '../model/bookShelfModel.php';
+
+    $insertCheck;
     //catches the post data from insertBook.php and sends it to the database
      if($_POST){
-        
-        $title = $_POST['title'];
-        $fiction = $_POST['fiction'];
-        $publisher = $_POST['publisher'];
-        $pages = $_POST['pages'];
-        $summary = $_POST['summary'];
-        //check the post data an convert it to boolean values for database compatability
-        if($fiction == "Yes"){
-            $fiction = 1;
-        }elseif ($fiction == "No"){
-            $fiction = 0;
-        }else{
-            //do nothing
-        }
-
-        //prepare a PDO statement to insert data into the database
-        $sqlInsert = "INSERT INTO `Books` (title, fiction, publisher, summary, pages) 
-                                   VALUES (:title, :fiction, :publisher, :summary, :pages)";
-        $preparedInsert = $dbh->prepare($sqlInsert);
-
-        $preparedInsert->bindParam(':title', $title);
-        $preparedInsert->bindParam(':fiction', $fiction);
-        $preparedInsert->bindParam(':publisher', $publisher);
-        $preparedInsert->bindParam(':summary', $summary);
-        $preparedInsert->bindParam(':pages', $pages);
-
+        $insertCheck = insertBook();
      }
 ?>
-<?php include 'views/header.php'; ?>
+<?php include 'header.php'; ?>
     <div class="container-fluid">
         <ul class="nav">
             <li class="nav-item"><h3>Book Shelf</h3></li>
@@ -65,7 +34,6 @@
             <?php
                 //notify with alert if insert was successful or failed
                 if($_POST) {
-                    $insertCheck = $preparedInsert->execute();
                     if ($insertCheck == true) {
                         echo "<div class='alert alert-success col-sm-4' role='alert' style='text-align: center'>
                                         <b>Success!</b> New book inserted.
@@ -80,12 +48,9 @@
                 } else {
                     //do nothing
                 }
-                //prepares a sql statement with PDO's to return all entries in the
-                //Books table, executes the PDO, and saves the returned data for later use
-                $sqlSelect = "SELECT * FROM Books";
-                $preparedSelect = $dbh->prepare($sqlSelect);
-                $preparedSelect->execute();
-                $result = $preparedSelect->fetchAll();
+
+                //grab assoc array from db of all books
+                $result = getBooksForDisplay();
 
             ?>
             <h2>Books Added</h2>
@@ -122,4 +87,4 @@
                 </ul>
         </div>
     </div>
-<?php include 'views/footer.php'; ?>
+<?php include 'footer.php'; ?>

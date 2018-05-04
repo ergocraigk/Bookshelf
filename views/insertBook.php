@@ -9,7 +9,7 @@
  */
 ?>
 
-<?php include 'views/header.php'; ?>
+<?php include 'header.php'; ?>
     <ul class="nav">
         <li class="nav-item"><h3>Book Shelf</h3></li>
         <li class="nav-link active"><a href="viewBooks.php">View Books</a></li>
@@ -83,4 +83,4 @@
             </div>
         </form>
     </div>
-<?php include 'views/footer.php'; ?>
+<?php include 'footer.php'; ?>

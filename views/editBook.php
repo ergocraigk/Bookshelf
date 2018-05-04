@@ -8,55 +8,24 @@
 
     //track the users session data
     session_start();
-    //pull in the database connection data
-    require_once('../../DBbooks.php');
+    error_reporting(E_ALL);
+    require_once '../model/bookShelfModel.php';
 
-    //error_reporting(E_ALL);
-    //attempt a database connection, display error message if fail
-    try{
-        $dbh = new PDO("mysql:host=$hostname;
-                                dbname=ckochgre_Books", $username, $password);
-    }catch (PDOException $e){
-        echo $e->getMessage();
-    }
     //pull the selected id out of the url for query
     $id = $_GET['id'];
 
-    //pull the selected id to populate fields for editing later
-    $sqlPullSelected = "SELECT * FROM Books WHERE id=:id";
-    $preparedSelect = $dbh->prepare($sqlPullSelected);
-    $preparedSelect->bindParam(':id', $id);
-    $preparedSelect->execute();
-    $result = $preparedSelect->fetch();
+    //get data for the book to be edited
+    $result = getSpecificBook($id);
 
     //flag for if update fails
     $errorUpdate = null;
 
     //if page receives post data prepare a PDO statement to update data in the database
     if($_POST){
-        //prepare a PDO statement to update data in the database
-        $sqlUpdate = "UPDATE `Books` SET `title` = :title, `fiction` = :fiction, `publisher` = :publisher, `summary` = :summary, `pages` = :pages WHERE `Books`.`id`=:id";
-        $preparedUpdate = $dbh->prepare($sqlUpdate);
-
-        $preparedUpdate->bindParam(':id', $result['id']);
-        $preparedUpdate->bindParam(':title', $_POST['title']);
-        $preparedUpdate->bindParam(':fiction', $_POST['fiction']);
-        $preparedUpdate->bindParam(':publisher', $_POST['publisher']);
-        $preparedUpdate->bindParam(':summary', $_POST['summary']);
-        $preparedUpdate->bindParam(':pages', $_POST['pages']);
-
-        //perform update and set flag if update fails
-        $updateCheck = $preparedUpdate->execute();
-        if($updateCheck == true){
-            header("Location: viewBooks.php");
-        } else {
-            $errorUpdate = "yes";
-        }
-    } else {
-        //do nothing
+        $errorUpdate = updateBook($id);
     }
 ?>
-<?php include 'views/header.php'; ?>
+<?php include 'header.php'; ?>
 <ul class="nav">
     <li class="nav-item"><h3>Book Shelf</h3></li>
     <li class="nav-link active"><a href="viewBooks.php">View Books</a></li>
@@ -161,4 +130,4 @@
         </div>
     </form>
 </div>
-<?php include 'views/footer.php'; ?>
+<?php include 'footer.php'; ?>

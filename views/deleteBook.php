@@ -10,37 +10,20 @@
     //track the users session data
     session_start();
     //pull in the database connection data
-    require_once('../../DBbooks.php');
 
-    //error_reporting(E_ALL);
-    //attempt a database connection, display error message if fail
-    try{
-        $dbh = new PDO("mysql:host=$hostname;
-                                    dbname=ckochgre_Books", $username, $password);
-    }catch (PDOException $e){
-        echo $e->getMessage();
-    }
+    require_once '../model/bookShelfModel.php';
+
+    testConnection();
 
     //pull the selected id out of the url for query
     $id = $_GET['id'];
 
     //flag if undo delete fails
     $errorUpdate = null;
+
     if($_SERVER['REQUEST_METHOD'] == "POST"){
-
-        //prepare a PDO statement to insert the book data back into the database
-        $sqlInsert = "INSERT INTO `Books` (title, fiction, publisher, summary, pages) 
-                                       VALUES (:title, :fiction, :publisher, :summary, :pages)";
-        $preparedInsert = $dbh->prepare($sqlInsert);
-
-        $preparedInsert->bindParam(':title', $_SESSION['resultsInSession']['title']);
-        $preparedInsert->bindParam(':fiction', $_SESSION['resultsInSession']['fiction']);
-        $preparedInsert->bindParam(':publisher', $_SESSION['resultsInSession']['publisher']);
-        $preparedInsert->bindParam(':summary', $_SESSION['resultsInSession']['summary']);
-        $preparedInsert->bindParam(':pages', $_SESSION['resultsInSession']['pages']);
-
         //perform undo delete and set flag if update fails
-        $insertCheck = $preparedInsert->execute();
+        $insertCheck = reinsertBook();
         if($insertCheck == true){
             header("Location: viewBooks.php");
         } else {
@@ -51,25 +34,15 @@
         //do nothing
     }
 
-    //pull the selected id to populate fields for editing later
-    $sqlPullSelected = "SELECT * FROM Books WHERE id=:id";
-    $preparedSelect = $dbh->prepare($sqlPullSelected);
-    $preparedSelect->bindParam(':id', $id);
-    $preparedSelect->execute();
-    $result = $preparedSelect->fetch();
-
     //save the entry to be deleted into session so they can undo it if they screwed up
-    $_SESSION['resultsInSession'] = $result;
+    $_SESSION['resultsInSession'] = getSpecificBook($id);
 
-    //delete from Books table the selected entry
-    $sqlDelete = "DELETE FROM Books WHERE id=:id";
-    $preparedDelete = $dbh->prepare($sqlDelete);
-    $preparedDelete->bindParam(':id', $id);
-    $deleteStatus = $preparedDelete->execute();
+    //delete the selected book
+    $deleteStatus = deleteBook($id);
 
 ?>
 
-<?php include 'views/header.php'; ?>
+<?php include 'header.php'; ?>
     <ul class="nav">
         <li class="nav-item"><h3>Book Shelf</h3></li>
         <li class="nav-link active"><a href="viewBooks.php">View Books</a></li>
@@ -102,4 +75,4 @@
                   </div>";
         ?>
     </div>
-<?php include 'views/footer.php'; ?>
+<?php include 'footer.php'; ?>
