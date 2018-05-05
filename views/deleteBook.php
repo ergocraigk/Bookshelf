@@ -7,47 +7,10 @@
  * @version GIT: TBD
  */
 
-    //track the users session data
-    session_start();
-    //pull in the database connection data
-
-    require_once '../model/bookShelfModel.php';
-
-    testConnection();
-
-    //pull the selected id out of the url for query
-    $id = $_GET['id'];
-
-    //flag if undo delete fails
-    $errorUpdate = null;
-
-    if($_SERVER['REQUEST_METHOD'] == "POST"){
-        //perform undo delete and set flag if update fails
-        $insertCheck = reinsertBook();
-        if($insertCheck == true){
-            header("Location: viewBooks.php");
-        } else {
-            $errorUpdate = "yes";
-        }
-
-    } else {
-        //do nothing
-    }
-
-    //save the entry to be deleted into session so they can undo it if they screwed up
-    $_SESSION['resultsInSession'] = getSpecificBook($id);
-
-    //delete the selected book
-    $deleteStatus = deleteBook($id);
+include 'header.php';
 
 ?>
 
-<?php include 'header.php'; ?>
-    <ul class="nav">
-        <li class="nav-item"><h3>Book Shelf</h3></li>
-        <li class="nav-link active"><a href="viewBooks.php">View Books</a></li>
-        <li class="nav-link active"><a href="insertBook.php">Add Book</a></li>
-    </ul>
     <div class="container">
         <?php
             //display error notification if delete fails
@@ -67,7 +30,7 @@
             //do nothing
         }
 
-            echo "<form action='deleteBook.php?id=" . $id . "' method='POST' class=''>";
+            echo "<form action='index.php?page=delete&id=" . $id . "' method='POST' class=''>";
 
 
             echo "<div class='form-group row'>

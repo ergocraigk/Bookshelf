@@ -10,14 +10,9 @@
 ?>
 
 <?php include 'header.php'; ?>
-    <ul class="nav">
-        <li class="nav-item"><h3>Book Shelf</h3></li>
-        <li class="nav-link active"><a href="viewBooks.php">View Books</a></li>
-        <li class="nav-link active"><a href="insertBook.php">Add Book</a></li>
-    </ul>
-    <br>
+
     <div class="container">
-        <form action="viewBooks.php" method="post" class="">
+        <form action="index.php?page=view" method="post" class="">
             <div>
                 <!-- book title -->
                 <div class="form-group row justify content center">

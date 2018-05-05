@@ -1,7 +1,7 @@
 <?php
 
     function testConnection(){
-        require '../../../DBbooks.php';
+        require '../../DBbooks.php';
         //error_reporting(E_ALL);
         //attempt a database connection, display error message if fail
         try{
@@ -118,7 +118,7 @@
         //perform update and set flag if update fails
         $updateCheck = $preparedUpdate->execute();
         if($updateCheck == true){
-            header("Location: viewBooks.php");
+            header("Location: index.php?page=view");
         } else {
             return "yes";
         }

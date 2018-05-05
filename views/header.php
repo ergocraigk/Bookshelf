@@ -19,3 +19,10 @@
 </head>
 
 <body>
+<div class="container-fluid">
+    <ul class="nav">
+        <li class="nav-item"><h3>Book Shelf</h3></li>
+        <li class="nav-link active"><a href="index.php?page=view">View Books</a></li>
+        <li class="nav-link active"><a href="index.php?page=add">Add Book</a></li>
+    </ul>
+    <br>

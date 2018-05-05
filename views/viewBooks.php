@@ -8,27 +8,8 @@
  * @version GIT: TBD
  */
 
-    //track the users session data
-    session_start();
-
-    error_reporting(E_ALL);
-
-    require_once '../model/bookShelfModel.php';
-
-    $insertCheck;
-    //catches the post data from insertBook.php and sends it to the database
-     if($_POST){
-        $insertCheck = insertBook();
-     }
 ?>
 <?php include 'header.php'; ?>
-    <div class="container-fluid">
-        <ul class="nav">
-            <li class="nav-item"><h3>Book Shelf</h3></li>
-            <li class="nav-link active"><a href="viewBooks.php">View Books</a></li>
-            <li class="nav-link active"><a href="insertBook.php">Add Book</a></li>
-        </ul>
-        <br>
 
         <div class="" style="margin-left: 5%">
             <?php
@@ -45,12 +26,7 @@
                     } else {
                         //do nothing
                     }
-                } else {
-                    //do nothing
                 }
-
-                //grab assoc array from db of all books
-                $result = getBooksForDisplay();
 
             ?>
             <h2>Books Added</h2>
@@ -74,8 +50,8 @@
 
                                 //provide edit and delete links so users can modify the books list
                                 echo "<div>
-                                        <span><a href='editBook.php?id=" . $row['id'] . "'><i class='far fa-edit'> Edit</i></a></span>
-                                        <span><a href='deleteBook.php?id=" . $row['id'] . "'><i class='far fa-trash-alt'> Delete</i></a></span>
+                                        <span><a href='index.php?page=edit&id=" . $row['id'] . "'><i class='far fa-edit'> Edit</i></a></span>
+                                        <span><a href='index.php?page=delete&id=" . $row['id'] . "'><i class='far fa-trash-alt'> Delete</i></a></span>
                                       </div>";
 
 

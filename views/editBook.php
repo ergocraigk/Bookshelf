@@ -6,33 +6,8 @@
  * @version GIT: TBD
  */
 
-    //track the users session data
-    session_start();
-    error_reporting(E_ALL);
-    require_once '../model/bookShelfModel.php';
+    include 'header.php';
 
-    //pull the selected id out of the url for query
-    $id = $_GET['id'];
-
-    //get data for the book to be edited
-    $result = getSpecificBook($id);
-
-    //flag for if update fails
-    $errorUpdate = null;
-
-    //if page receives post data prepare a PDO statement to update data in the database
-    if($_POST){
-        $errorUpdate = updateBook($id);
-    }
-?>
-<?php include 'header.php'; ?>
-<ul class="nav">
-    <li class="nav-item"><h3>Book Shelf</h3></li>
-    <li class="nav-link active"><a href="viewBooks.php">View Books</a></li>
-    <li class="nav-link active"><a href="insertBook.php">Add Book</a></li>
-</ul>
-<br>
-<?php
     if($errorUpdate == "yes"){
         echo "<div class='alert alert-danger col-sm-4' role='alert' style='text-align: center'>
                                         <b>Error!</b> Book not Updated!
@@ -42,7 +17,7 @@
     }
 ?>
 <div class="container">
-    <form action="<?php echo "editBook.php?id=" . $id; ?>" method="post" class="">
+    <form action="<?php echo "index.php?page=edit&id=" . $id; ?>" method="post" class="">
         <div>
             <!-- book title -->
             <div class="form-group row justify content center">
