@@ -1,11 +1,24 @@
 <?php
+/**
+ * This file has control logic for the the bookshelf
+ * application. This file delegates views and communicates
+ * with the model to retrieve database data.
+ *
+ * @author Craig Koch
+ * @version TBD
+ */
 
-//loads the addBooks.php page
+
+/**
+ * Loads the addBooks.php page when called
+ */
 function handleAddBooks() {
     require 'views/insertBook.php';
 }
 
-//retrieves all books from the DB and loads the viewBooks.php page
+/**
+ * Retrieves all books from the DB and loads the viewBooks.php page
+ */
 function handleViewBooksGet() {
 
     include_once 'model/bookShelfModel.php';
@@ -14,13 +27,13 @@ function handleViewBooksGet() {
     $result = getBooksForDisplay();
 
     require 'views/viewBooks.php';
-
-    $booksGetArray = array($result);
-
-    return $booksGetArray;
 }
 
-/* inserts a new book into the DB using data from the form on addBooks.php. Afterward retrieves all books from the DB and loads the viewBooks.php page. */
+/**
+ * Inserts a new book into the DB using data from the form
+ * on addBooks.php. Afterward retrieves all books from the
+ * DB and loads the viewBooks.php page.
+ */
 function handleViewBooksPost() {
     include_once 'model/bookShelfModel.php';
 
@@ -34,13 +47,11 @@ function handleViewBooksPost() {
     $result = getBooksForDisplay();
 
     require 'views/viewBooks.php';
-
-    $booksGetArray = array($insertCheck, $result);
-
-    return $booksGetArray;
 }
 
-//loads a new book into the editBooks.php page
+/**
+ * Loads a new book into the editBooks.php page
+ */
 function handleEditBooksGet() {
     include_once 'model/bookShelfModel.php';
 
@@ -51,11 +62,12 @@ function handleEditBooksGet() {
     $result = getSpecificBook($id);
 
     require 'views/editBook.php';
-
-    return $result;
 }
 
-/* updates a record from the editBooks.php page form and then redirects to the viewBooks.php page. */
+/**
+ * Updates a record from the editBooks.php page
+ * form and then redirects to the viewBooks.php page.
+ */
 function handleEditBooksPost() {
     include_once 'model/bookShelfModel.php';
 
@@ -72,13 +84,12 @@ function handleEditBooksPost() {
     $errorUpdate = updateBook($id);
 
     require 'views/editBook.php';
-
-    $postedBooksArray = array($result, $errorUpdate);
-
-    return $postedBooksArray;
 }
 
-//deletes a book with the given id and displays the deleteBooks.php page
+/**
+ * Deletes a book with the given id and
+ * displays the deleteBooks.php page
+ */
 function handleDeleteBooksGet() {
 
     require_once 'model/bookShelfModel.php';
@@ -96,13 +107,13 @@ function handleDeleteBooksGet() {
     $deleteStatus = deleteBook($id);
 
     require 'views/deleteBook.php';
-
-    $getDeleteBooksArray = array($errorUpdate, $deleteStatus);
-
-    return $getDeleteBooksArray;
 }
 
-/* handles the undo button press and uses session to insert the previously deleted book back into the DB. Afterwards the user is redirected to viewBooks.php. */
+/**
+ * Handles the undo button press and uses session to
+ * insert the previously deleted book back into the DB.
+ * Afterwards the user is redirected to viewBooks.php.
+ */
 function handleDeleteBooksPost() {
     require_once 'model/bookShelfModel.php';
 
@@ -124,12 +135,4 @@ function handleDeleteBooksPost() {
         require 'views/delete.php';
     }
 }
-
-
-
-
-
-
-
-
 ?>

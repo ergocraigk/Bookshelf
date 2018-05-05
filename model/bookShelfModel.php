@@ -1,5 +1,17 @@
 <?php
+/**
+ * This file handles all database communications
+ * for the bookshelf application. Functions are called
+ * from the controller.
+ *
+ * @author Craig Koch
+ * @version TBD
+ */
 
+/**
+ * tests the database connection, sets the database connection variables,
+ * & returns error information if it errors out
+ */
     function testConnection(){
         require '../../DBbooks.php';
         //error_reporting(E_ALL);
@@ -14,6 +26,10 @@
         }
     }
 
+/**
+ * Insert a new book into the database.
+ * Uses posted data and PDO's for security.
+ */
     function insertBook(){
         //test connection and set db connection fields
         $dbh = testConnection();
@@ -45,7 +61,9 @@
 
         return $preparedInsert->execute();
     }
-
+/**
+ * Pulls all books from the database to be displayed
+ */
     function getBooksForDisplay(){
         //test connection and set db connection fields
         $dbh = testConnection();
@@ -57,7 +75,9 @@
         $preparedSelect->execute();
         return $preparedSelect->fetchAll();
     }
-
+/**
+ * Pulls data from session variables to reenter a book into the database
+ */
     function reinsertBook(){
         //test connection and set db connection fields
         $dbh = testConnection();
@@ -76,7 +96,12 @@
         //perform undo delete and set flag if update fails
         return $preparedInsert->execute();
     }
-
+/**
+ * Pulls specific book's data from the database based
+ * on id paramter
+ *
+ * @param int $id usually pulled from get variable to identify a particular book
+ */
     function getSpecificBook($id){
         //test connection and set db connection fields
         $dbh = testConnection();
@@ -88,7 +113,11 @@
         $preparedSelect->execute();
         return $preparedSelect->fetch();
     }
-
+/**
+ * Deletes a book from the database based on the provided id
+ *
+ * @param int $id usually pulled from get variable to identify a particular book
+ */
     function deleteBook($id){
         //test connection and set db connection fields
         $dbh = testConnection();
@@ -99,7 +128,11 @@
         $preparedDelete->bindParam(':id', $id);
         return $preparedDelete->execute();
     }
-
+/**
+ * edits a books data based on the provided id
+ *
+ * @param int $id usually pulled from get variable to identify a particular book
+ */
     function updateBook($id){
         //test connection and set db connection fields
         $dbh = testConnection();
@@ -123,11 +156,4 @@
             return "yes";
         }
     }
-
-
-
-
-
-
-
 ?>
