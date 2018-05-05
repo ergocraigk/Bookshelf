@@ -1,0 +1,282 @@
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Users\Doug\PhpstormProjects\MyProject>cd BookShelf
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 748B-A98E
+
+ Directory of C:\Users\Doug\PhpstormProjects\MyProject\BookShelf
+
+04/26/2018  06:00 PM    <DIR>          .
+04/26/2018  06:00 PM    <DIR>          ..
+04/21/2018  11:41 PM             5,643 deleteBook.php
+04/21/2018  10:04 PM             8,750 editBook.php
+04/21/2018  07:12 PM             5,479 insertBook.php
+04/21/2018  11:04 PM             6,840 viewBooks.php
+               4 File(s)         26,712 bytes
+               2 Dir(s)  231,326,031,872 bytes free
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   deleteBook.php
+        modified:   editBook.php
+        modified:   insertBook.php
+        modified:   viewBooks.php
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        controllers/
+        model/
+        views/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git add *
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   controllers/bookShelfController.php
+        modified:   deleteBook.php
+        modified:   editBook.php
+        modified:   insertBook.php
+        new file:   model/bookShelfModel.php
+        modified:   viewBooks.php
+        new file:   views/footer.php
+        new file:   views/header.php
+
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git commit -m "created header and footer files to reduce code reuse and began MVC file structure"
+[master aa6e6df] created header and footer files to reduce code reuse and began MVC file structure
+ 8 files changed, 31 insertions(+), 94 deletions(-)
+ create mode 100644 controllers/bookShelfController.php
+ create mode 100644 model/bookShelfModel.php
+ create mode 100644 views/footer.php
+ create mode 100644 views/header.php
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git push
+Counting objects: 12, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (12/12), 1.08 KiB | 275.00 KiB/s, done.
+Total 12 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 4 local objects.
+To https://github.com/ergocraigk/Bookshelf.git
+   a07f769..aa6e6df  master -> master
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        renamed:    deleteBook.php -> views/deleteBook.php
+        renamed:    editBook.php -> views/editBook.php
+        renamed:    insertBook.php -> views/insertBook.php
+        renamed:    viewBooks.php -> views/viewBooks.php
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   model/bookShelfModel.php
+        modified:   views/deleteBook.php
+        modified:   views/editBook.php
+        modified:   views/insertBook.php
+        modified:   views/viewBooks.php
+
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git add *
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   model/bookShelfModel.php
+        renamed:    deleteBook.php -> views/deleteBook.php
+        renamed:    editBook.php -> views/editBook.php
+        renamed:    insertBook.php -> views/insertBook.php
+        renamed:    viewBooks.php -> views/viewBooks.php
+
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git commit -m "Shifted database activities into model layer and conformed views to views directory"
+[master 32f440a] Shifted database activities into model layer and conformed views to views directory
+ 5 files changed, 162 insertions(+), 122 deletions(-)
+ rename deleteBook.php => views/deleteBook.php (54%)
+ rename editBook.php => views/editBook.php (75%)
+ rename insertBook.php => views/insertBook.php (98%)
+ rename viewBooks.php => views/viewBooks.php (62%)
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git push
+Counting objects: 9, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (9/9), 5.99 KiB | 1.20 MiB/s, done.
+Total 9 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), done.
+To https://github.com/ergocraigk/Bookshelf.git
+   aa6e6df..32f440a  master -> master
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   controllers/bookShelfController.php
+        modified:   model/bookShelfModel.php
+        modified:   views/deleteBook.php
+        modified:   views/editBook.php
+        modified:   views/header.php
+        modified:   views/insertBook.php
+        modified:   views/viewBooks.php
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        index.php
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git add *
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   controllers/bookShelfController.php
+        new file:   index.php
+        modified:   model/bookShelfModel.php
+        modified:   views/deleteBook.php
+        modified:   views/editBook.php
+        modified:   views/header.php
+        modified:   views/insertBook.php
+        modified:   views/viewBooks.php
+
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git commit -m "built front controller into application and moved controller operations into controller from each individual view"
+[master ae8f608] built front controller into application and moved controller operations into controller from each individual view
+ 8 files changed, 195 insertions(+), 102 deletions(-)
+ create mode 100644 index.php
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git push
+Counting objects: 13, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (13/13), 2.49 KiB | 636.00 KiB/s, done.
+Total 13 (delta 6), reused 0 (delta 0)
+remote: Resolving deltas: 100% (6/6), completed with 6 local objects.
+To https://github.com/ergocraigk/Bookshelf.git
+   32f440a..ae8f608  master -> master
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   controllers/bookShelfController.php
+        modified:   index.php
+        modified:   model/bookShelfModel.php
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git add *
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   controllers/bookShelfController.php
+        modified:   index.php
+        modified:   model/bookShelfModel.php
+
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git commit -m "added proper doc blocks and commenting to new files for documentation purposes"
+[master a2507dc] added proper doc blocks and commenting to new files for documentation purposes
+ 3 files changed, 88 insertions(+), 47 deletions(-)
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git push
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 1.66 KiB | 566.00 KiB/s, done.
+Total 7 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/ergocraigk/Bookshelf.git
+   ae8f608..a2507dc  master -> master
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+C:\Users\Doug\PhpstormProjects\MyProject\BookShelf>
